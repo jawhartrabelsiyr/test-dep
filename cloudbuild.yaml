@@ -22,3 +22,6 @@ steps:
       - --platform=managed
       - --region=${_REGION}
       - --allow-unauthenticated
+
+options:
+  logging: CLOUD_LOGGING_ONLY
