@@ -24,7 +24,5 @@ steps:
       - --allow-unauthenticated
 
 options:
-  logging: GCS_ONLY
-  logsBucket: gs://spark-int-abspace-www
-
-
+  logging: CLOUD_LOGGING_ONLY
+  
