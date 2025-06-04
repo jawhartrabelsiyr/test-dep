@@ -1,0 +1,24 @@
+substitutions:
+  _SERVICE_NAME: spring-boot-dev
+  _REGION: europe-west1
+
+steps:
+  # Build image depuis Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}', '.']
+
+  # Push image vers Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}']
+
+  # Déploiement sur Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - run
+      - deploy
+      - ${_SERVICE_NAME}
+      - --image=gcr.io/$PROJECT_ID/${_SERVICE_NAME}
+      - --platform=managed
+      - --region=${_REGION}
+      - --allow-unauthenticated
